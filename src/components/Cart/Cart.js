@@ -7,8 +7,8 @@ const Cart = (props) => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const cartItemsJSX = cartItems.map((item) => (
     <CartItem
+      key={item.id}
       item={{
-        id: item.id,
         title: item.title,
         quantity: item.quantity,
         total: item.total,
