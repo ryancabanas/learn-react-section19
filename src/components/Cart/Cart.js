@@ -9,10 +9,12 @@ const Cart = (props) => {
     <CartItem
       key={item.id}
       item={{
+        id: item.id,
         title: item.title,
         quantity: item.quantity,
         total: item.total,
         price: item.price,
+        description: item.description,
       }}
     />
   ));
