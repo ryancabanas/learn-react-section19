@@ -18,7 +18,12 @@ export const fetchCartData = () => {
 
     try {
       const cartData = await fetchData();
-      dispatch(cartActions.replaceCart(cartData));
+      dispatch(
+        cartActions.replaceCart({
+          cartItems: cartData.cartItems || [],
+          totalItemQuantity: cartData.totalItemQuantity,
+        })
+      );
     } catch (error) {
       dispatch(
         uiActions.showNotification({
@@ -44,7 +49,13 @@ export const sendCartData = (cart) => {
     const sendRequest = async () => {
       const response = await fetch(
         'https://react-http-4bc80-default-rtdb.firebaseio.com/redux-store-cart.json',
-        { method: 'PUT', body: JSON.stringify(cart) }
+        {
+          method: 'PUT',
+          body: JSON.stringify({
+            cartItems: cart.cartItems,
+            totalItemQuantity: cart.totalItemQuantity,
+          }),
+        }
       );
 
       if (!response.ok) {

@@ -25,15 +25,17 @@ function App() {
       return;
     }
 
-    /* Main dispatch approach, but no promises to work with. */
-    // dispatch(sendCartData(cart));
+    if (cart.cartChanged) {
+      /* Main dispatch approach, but no promises to work with. */
+      // dispatch(sendCartData(cart));
 
-    /* Alternative way to dispatch custom action creator function, which gives us a promise.  */
-    sendCartData(cart)(dispatch).then((empty) => {
-      setTimeout(() => {
-        dispatch(uiActions.hideNotification());
-      }, 1000);
-    });
+      /* Alternative way to dispatch custom action creator function, which gives us a promise.  */
+      sendCartData(cart)(dispatch).then((empty) => {
+        setTimeout(() => {
+          dispatch(uiActions.hideNotification());
+        }, 1000);
+      });
+    }
   }, [cart, dispatch]);
 
   return (
