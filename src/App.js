@@ -6,17 +6,21 @@ import Products from './components/Shop/Products';
 import { uiActions } from './store/uiSlice';
 import Notification from './components/UI/Notification';
 import { fetchCartData, sendCartData } from './store/cartActions';
+import { fetchUIData, sendUIData } from './store/uiActions';
 
 let isInitialPageLoad = true;
 
 function App() {
   const dispatch = useDispatch();
-  const showCart = useSelector((state) => state.ui.cartIsVisible);
+  const { cartIsVisible, cartVisibilityChanged } = useSelector(
+    (state) => state.ui
+  );
   const cart = useSelector((state) => state.cart);
   const notification = useSelector((state) => state.ui.notification);
 
   useEffect(() => {
     dispatch(fetchCartData());
+    dispatch(fetchUIData());
   }, [dispatch]);
 
   useEffect(() => {
@@ -36,7 +40,11 @@ function App() {
         }, 1000);
       });
     }
-  }, [cart, dispatch]);
+
+    if (cartVisibilityChanged) {
+      dispatch(sendUIData({ cartIsVisible }));
+    }
+  }, [cart, dispatch, cartVisibilityChanged, cartIsVisible]);
 
   return (
     <>
@@ -48,7 +56,7 @@ function App() {
         />
       )}
       <Layout>
-        {showCart && <Cart />}
+        {cartIsVisible && <Cart />}
         <Products />
       </Layout>
     </>
