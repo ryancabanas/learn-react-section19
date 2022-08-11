@@ -19,7 +19,7 @@ export const fetchUIData = () => {
       const uiData = await fetchData();
       dispatch(
         uiActions.replaceUI({
-          cartIsVisible: uiData.cartIsVisible || false,
+          cartIsVisible: uiData?.cartIsVisible || false,
         })
       );
     } catch (error) {
